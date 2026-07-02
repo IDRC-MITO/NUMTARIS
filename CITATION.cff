@@ -1,0 +1,40 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "NUMTs Detection Pipeline: discordant/split-read detection of nuclear-embedded mitochondrial DNA"
+version: 1.0.0
+date-released: "2026-07-02"
+license: MIT
+repository-code: "https://github.com/[YOUR-GITHUB-USERNAME]/[REPO-NAME]"
+authors:
+  - family-names: "[YOUR FAMILY NAME]"
+    given-names: "[YOUR GIVEN NAME]"
+    affiliation: "[YOUR AFFILIATION]"
+    email: "k.nakamura.fb@juntendo.ac.jp"
+references:
+  - type: article
+    authors:
+      - family-names: "Wei"
+        given-names: "W"
+      - family-names: "Schon"
+        given-names: "K"
+      - family-names: "Elgar"
+        given-names: "G"
+      - family-names: "Orioli"
+        given-names: "A"
+      - family-names: "Tanguy"
+        given-names: "M"
+      - family-names: "Giess"
+        given-names: "A"
+      - family-names: "Tischkowitz"
+        given-names: "M"
+      - family-names: "Caulfield"
+        given-names: "M"
+      - family-names: "Chinnery"
+        given-names: "PF"
+    title: "Nuclear-embedded mitochondrial DNA sequences in 66,083 human genomes"
+    journal: "Nature"
+    volume: 611
+    start: 105
+    end: 114
+    year: 2022
+    doi: "10.1038/s41586-022-05288-7"
