@@ -105,6 +105,9 @@ chmod +x Scripts/NUMTs_detection_fixed.sh Scripts/run_NUMTs_All_fixed.sh
 
 No build step is required; the scripts run directly from the repository.
 
+## Test Sample(CCLE Dataset)
+URL:https://registry.opendata.aws/depmap-omics-ccle/
+
 ## Usage
 
 ### Single sample
