@@ -220,22 +220,7 @@ All four can be overridden from the command line on both
 - Each output TSV records the exact `discFile`, `splitFile`, and `wgsBAM`
   paths used to generate it, for traceability back to the inputs.
 
-## Citation
-
-If you use this pipeline, please cite it via the metadata in
-[`CITATION.cff`](CITATION.cff), and cite the original discordant/split-read
-NUMT detection approach:
-
-> Wei W, Schon K, Elgar G, Orioli A, Tanguy M, Giess A, Tischkowitz M,
-> Caulfield M, Chinnery PF. Nuclear-embedded mitochondrial DNA sequences in
-> 66,083 human genomes. *Nature* 611, 105–114 (2022).
-> https://doi.org/10.1038/s41586-022-05288-7
-
 ## License
 
 Released under the [MIT License](LICENSE).
-
-## Contributing
-
-Contributions are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
 
