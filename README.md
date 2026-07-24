@@ -19,9 +19,7 @@ reimplemented here as a self-contained, portable pipeline of three scripts.
 - [Output format](#output-format)
 - [Parameters](#parameters)
 - [Reproducibility](#reproducibility)
-- [Citation](#citation)
 - [License](#license)
-- [Contributing](#contributing)
 
 ## How it works
 
