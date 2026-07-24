@@ -73,10 +73,7 @@ searchNumtCluster_fromDiscordantReads_fixed.py  (cluster + filter -> TSV)
 │   └── searchNumtCluster_fromDiscordantReads_fixed.py  # clustering/filtering logic
 ├── requirements.txt                            # Python dependencies
 ├── README.md
-├── LICENSE
-├── CITATION.cff
-├── CONTRIBUTING.md
-└── CHANGELOG.md
+└── LICENSE
 ```
 
 ## Requirements
