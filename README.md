@@ -1,4 +1,4 @@
-# NUMTScan
+# NUMTRA
 # NUMTs Detection Pipeline
 
 Detects candidate NUMTs (nuclear-embedded mitochondrial DNA sequences) from
