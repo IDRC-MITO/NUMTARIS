@@ -1,4 +1,12 @@
 # NUMTRA
+
+
+
+<img width="1254" height="1254" alt="NUMTRA_logo" src="https://github.com/user-attachments/assets/aa8b6cd3-e117-4f62-a943-5d511f4ba085" />
+
+
+
+
 # NUMTs Detection Pipeline
 
 Detects candidate NUMTs (nuclear-embedded mitochondrial DNA sequences) from
