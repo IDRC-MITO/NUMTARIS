@@ -1,6 +1,7 @@
 # NUMTARIS
 <img width="1345" height="1170" alt="ChatGPT Image 2026年7月30日 17_36_47" src="https://github.com/user-attachments/assets/e1603fd0-6c67-46a0-901d-a856c4e38dcd" />
 
+Inspired by Polaris, the North Star, NUMTARIS aims to serve as a guiding framework for discovering and interpreting mitochondrial DNA insertions in the nuclear genome.
 # NUMTs Detection Pipeline
 
 Detects candidate NUMTs (nuclear-embedded mitochondrial DNA sequences) from
