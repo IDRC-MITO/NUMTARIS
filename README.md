@@ -1,5 +1,5 @@
 # NUMTARIS
-<img width="1254" height="1254" alt="ChatGPT Image 2026年7月30日 10_57_06" src="https://github.com/user-attachments/assets/388ead86-c204-4e33-98b4-ea80a279cdef" />
+<img width="1345" height="1170" alt="ChatGPT Image 2026年7月30日 17_36_47" src="https://github.com/user-attachments/assets/e1603fd0-6c67-46a0-901d-a856c4e38dcd" />
 
 # NUMTs Detection Pipeline
 
