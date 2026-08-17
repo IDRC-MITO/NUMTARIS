@@ -1,7 +1,5 @@
 # NUMTARIS
 <img width="1254" height="1254" alt="ツールロゴ" src="https://github.com/user-attachments/assets/f4fdca2d-38b8-4a62-80ba-270213649719" />
-
-
 Inspired by Polaris, the North Star, NUMTARIS aims to serve as a guiding framework for discovering and interpreting mitochondrial DNA insertions in the nuclear genome.
 # NUMTs Detection Pipeline
 
