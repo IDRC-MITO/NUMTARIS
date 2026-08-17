@@ -2,16 +2,10 @@
 <img width="1254" height="1254" alt="ツールロゴ" src="https://github.com/user-attachments/assets/f4fdca2d-38b8-4a62-80ba-270213649719" />
 Inspired by Polaris, the North Star, NUMTARIS aims to serve as a guiding framework for discovering and interpreting mitochondrial DNA insertions in the nuclear genome.
 # NUMTs Detection Pipeline
+Detects and visualizes candidate NUMTs (nuclear-embedded mitochondrial DNA segments) from whole-genome sequencing BAM files, by identifying MT-nuclear
+discordant and split read pairs and clustering them into candidate insertion sites.
 
-Detects and visualizes candidate NUMTs (nuclear-embedded mitochondrial DNA
-segments) from whole-genome sequencing BAM files, by identifying MT-nuclear
-discordant and split read pairs and clustering them into candidate
-insertion sites.
-
-This pipeline builds on the discordant/split-read clustering approach
-described in Wei et al., *Nature* 611:105–114 (2022) (see
-[Citation](#citation)), reimplemented here as a self-contained, portable
-pipeline.
+This pipeline builds on the discordant/split-read clustering approach described in Wei et al., *Nature* 611:105–114 (2022) (see [Citation](#citation)), reimplemented here as a self-contained, portable pipeline.
 
 ## Table of contents
 
