@@ -15,6 +15,8 @@ This pipeline builds on the discordant/split-read clustering approach described 
 - [Usage](#usage)
 - [Output](#output)
 - [Parameters](#parameters)
+- [Downstream analyses (manuscript figures)](#downstream-analyses-manuscript-figures)
+- [Sequence-based regulatory modelling (Puffin)](#sequence-based-regulatory-modelling-puffin)
 - [Known limitations](#known-limitations)
 - [Reproducibility](#reproducibility)
 - [Citation](#citation)
@@ -91,11 +93,20 @@ for candidates, not a final call.
 
 ```
 .
-├── NUMTs_detection_fixed.sh   # per-sample detection: extract reads + cluster
-├── numtAnchorCluster.py       # clustering/filtering logic -> per-sample TSV
-├── run_NUMTs_All_fixed.sh     # batch driver over a BAM directory
-├── run_NUMTs_Fig_html.py      # aggregation -> circos figure + interactive HTML
-├── requirements.txt           # Python dependencies
+├── script/
+│   ├── NUMTs_detection_fixed.sh   # per-sample detection: extract reads + cluster
+│   ├── numtAnchorCluster.py       # clustering/filtering logic -> per-sample TSV
+│   ├── run_NUMTs_All_fixed.sh     # batch driver over a BAM directory
+│   └── run_NUMTs_Fig_html.py      # aggregation -> circos figure + interactive HTML
+├── analysis/                      # downstream analyses that reproduce the manuscript figures
+│   ├── README.md
+│   └── figure2_regulatory_enrichment/
+│       ├── figure2_regulatory_enrichment.py   # Figure 2a-d: regulatory-element enrichment + nearest-TSS
+│       ├── config.example.json
+│       └── README.md
+├── NUMTs_View/                    # standalone interactive viewer assets
+├── requirements.txt              # Python dependencies
+├── LICENSE
 └── README.md
 ```
 
@@ -248,6 +259,55 @@ All four can be overridden from the command line on both
 `NUMTs_detection_fixed.sh` and `run_NUMTs_All_fixed.sh` (forwarded via
 `-- <options>` in the latter).
 
+## Downstream analyses (manuscript figures)
+
+Scripts that reproduce the figures and statistical analyses of the manuscript
+from the detection-pipeline output (`*.NUMTs_candidates.tsv`) live under
+[`analysis/`](analysis/). Each sub-directory is self-contained and carries its
+own README with inputs, external reference files, parameters and outputs.
+
+| Analysis | Script |
+|---|---|
+| **Figure 2** — enrichment of high-confidence NUMTs at Fanta.Bio CRE, FANTOM5 CAGE peaks, FANTOM5 enhancers and ENCODE cCRE (PLS/ELS/CTCF) annotations relative to chromosome-, length- and mappability-matched random intervals (1,000 randomizations, fixed seed, empirical *P* = (*k*+1)/(*N*+1)); distance from NUMT midpoints to the nearest protein-coding TSS (GENCODE v49) | [`analysis/figure2_regulatory_enrichment/`](analysis/figure2_regulatory_enrichment/) |
+
+Common conventions: only `PASS_DISC_AND_SPLIT` (high-confidence) calls are used;
+calls are pooled per cohort; matched random intervals are drawn on the same
+chromosome, preserving interval length, restricted to Umap k=100 fully-mappable
+regions (score = 1.0). External annotation datasets (FANTOM5, ENCODE, Fanta.Bio,
+GENCODE, Umap, MitoCarta3.0) are **not redistributed** here and must be
+downloaded from their original public resources — see each sub-directory README.
+
+```
+pip install -r requirements.txt
+cd analysis/figure2_regulatory_enrichment
+python figure2_regulatory_enrichment.py \
+    --numt-root /path/to/numt_calls_by_cohort \
+    --ref-dir   /path/to/reference \
+    --out-dir   ./Figure2_out \
+    --config    config.example.json
+```
+
+## Sequence-based regulatory modelling (Puffin)
+
+The predicted transcription-initiation profiles and transcription-factor motif
+activities before and after *in silico* NUMT insertion (Figures 3–5) were
+computed with **Puffin**, a third-party sequence-based model trained on FANTOM5
+CAGE data:
+
+- Puffin source code: <https://github.com/jzhoulab/puffin>
+- Method: Dudnyk, K., Cai, D., Shi, C., Xu, J. and Zhou, J. *Sequence basis of
+  transcription initiation in the human genome.* **Science** 384, eadj0116 (2024).
+  <https://doi.org/10.1126/science.adj0116>
+
+Puffin is not redistributed in this repository. In this study Puffin was used as
+follows: NUMT-containing alleles were reconstructed from breakpoint-supporting
+sequencing reads and inserted into the matched nuclear reference context; the
+reference and NUMT-containing sequences were then scored with Puffin, and the
+per-locus change (after − before) in predicted transcription-initiation signal
+and in motif activation was tabulated and visualised. Install Puffin and its
+model weights per the upstream instructions; the exact model and settings used
+are given in the manuscript Materials & Methods.
+
 ## Known limitations
 
 - Chromosome-naming logic (`is_primary_chrom` in `numtAnchorCluster.py`;
@@ -283,7 +343,19 @@ for NUMT detection described in:
 > sequences in 66,083 human genomes. *Nature* 611, 105–114 (2022).
 > https://doi.org/10.1038/s41586-022-05288-7
 
+The sequence-based regulatory modelling in the downstream analyses uses:
+
+> Dudnyk, K., Cai, D., Shi, C., Xu, J. and Zhou, J. Sequence basis of
+> transcription initiation in the human genome. *Science* 384, eadj0116 (2024).
+> https://doi.org/10.1126/science.adj0116 — code: https://github.com/jzhoulab/puffin
+
+External annotation resources used by the downstream analyses (cite as
+appropriate): FANTOM5 (Nobusada et al., *Nucleic Acids Res* 53, D419–D424, 2025),
+ENCODE SCREEN cCREs, Fanta.Bio human CREs, GENCODE, the Umap/Bismap mappability
+tracks, and MitoCarta3.0.
+
 ## License
 
 Released under the MIT License.
+
 
