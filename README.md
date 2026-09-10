@@ -15,7 +15,7 @@ This pipeline builds on the discordant/split-read clustering approach described 
 - [Usage](#usage)
 - [Output](#output)
 - [Parameters](#parameters)
-- [Downstream analyses (manuscript figures)](#downstream-analyses-manuscript-figures)
+- [Downstream analyses](#downstream-analyses)
 - [Sequence-based regulatory modelling (Puffin)](#sequence-based-regulatory-modelling-puffin)
 - [Known limitations](#known-limitations)
 - [Reproducibility](#reproducibility)
@@ -98,12 +98,8 @@ for candidates, not a final call.
 │   ├── numtAnchorCluster.py       # clustering/filtering logic -> per-sample TSV
 │   ├── run_NUMTs_All_fixed.sh     # batch driver over a BAM directory
 │   └── run_NUMTs_Fig_html.py      # aggregation -> circos figure + interactive HTML
-├── analysis/                      # downstream analyses that reproduce the manuscript figures
-│   ├── README.md
-│   └── figure2_regulatory_enrichment/
-│       ├── figure2_regulatory_enrichment.py   # Figure 2a-d: regulatory-element enrichment + nearest-TSS
-│       ├── config.example.json
-│       └── README.md
+├── analysis/                      # downstream analyses of the detection-pipeline output
+│   └── regulatory_enrichment.py   # regulatory-element enrichment + nearest-TSS analysis
 ├── NUMTs_View/                    # standalone interactive viewer assets
 ├── requirements.txt              # Python dependencies
 ├── LICENSE
@@ -259,40 +255,44 @@ All four can be overridden from the command line on both
 `NUMTs_detection_fixed.sh` and `run_NUMTs_All_fixed.sh` (forwarded via
 `-- <options>` in the latter).
 
-## Downstream analyses (manuscript figures)
+## Downstream analyses
 
-Scripts that reproduce the figures and statistical analyses of the manuscript
-from the detection-pipeline output (`*.NUMTs_candidates.tsv`) live under
-[`analysis/`](analysis/). Each sub-directory is self-contained and carries its
-own README with inputs, external reference files, parameters and outputs.
+Scripts under [`analysis/`](analysis/) take the detection-pipeline output
+(`*.NUMTs_candidates.tsv`) and run the downstream genomic analyses reported in
+the NUMTARIS manuscript.
 
-| Analysis | Script |
+| Script | Analysis |
 |---|---|
-| **Figure 2** — enrichment of high-confidence NUMTs at Fanta.Bio CRE, FANTOM5 CAGE peaks, FANTOM5 enhancers and ENCODE cCRE (PLS/ELS/CTCF) annotations relative to chromosome-, length- and mappability-matched random intervals (1,000 randomizations, fixed seed, empirical *P* = (*k*+1)/(*N*+1)); distance from NUMT midpoints to the nearest protein-coding TSS (GENCODE v49) | [`analysis/figure2_regulatory_enrichment/`](analysis/figure2_regulatory_enrichment/) |
+| [`analysis/regulatory_enrichment.py`](analysis/regulatory_enrichment.py) | Enrichment of high-confidence NUMTs at regulatory annotations (Fanta.Bio CRE, FANTOM5 CAGE peaks, FANTOM5 enhancers, ENCODE cCRE PLS/ELS/CTCF) relative to chromosome-, length- and mappability-matched random intervals (1,000 randomizations, fixed seed, empirical *P* = (*k*+1)/(*N*+1)); distance from NUMT midpoints to the nearest protein-coding TSS (GENCODE) |
 
 Common conventions: only `PASS_DISC_AND_SPLIT` (high-confidence) calls are used;
 calls are pooled per cohort; matched random intervals are drawn on the same
 chromosome, preserving interval length, restricted to Umap k=100 fully-mappable
 regions (score = 1.0). External annotation datasets (FANTOM5, ENCODE, Fanta.Bio,
 GENCODE, Umap, MitoCarta3.0) are **not redistributed** here and must be
-downloaded from their original public resources — see each sub-directory README.
+downloaded from their original public resources. Each script's module docstring
+lists its inputs, expected reference files, parameters, outputs, and the
+`--config` schema (`DEFAULT_CONFIG`, which reproduces the cohort grouping and
+annotation set used in the manuscript).
 
 ```
 pip install -r requirements.txt
-cd analysis/figure2_regulatory_enrichment
-python figure2_regulatory_enrichment.py \
+python analysis/regulatory_enrichment.py \
     --numt-root /path/to/numt_calls_by_cohort \
     --ref-dir   /path/to/reference \
-    --out-dir   ./Figure2_out \
-    --config    config.example.json
+    --out-dir   ./out
 ```
+
+`--numt-root` must contain one sub-directory per cohort (directory names set in
+`DEFAULT_CONFIG` / `--config`), each holding that cohort's
+`*.NUMTs_candidates.tsv` files. Pass `python analysis/regulatory_enrichment.py -h`
+for all options.
 
 ## Sequence-based regulatory modelling (Puffin)
 
 The predicted transcription-initiation profiles and transcription-factor motif
-activities before and after *in silico* NUMT insertion (Figures 3–5) were
-computed with **Puffin**, a third-party sequence-based model trained on FANTOM5
-CAGE data:
+activities before and after *in silico* NUMT insertion were computed with
+**Puffin**, a third-party sequence-based model trained on FANTOM5 CAGE data:
 
 - Puffin source code: <https://github.com/jzhoulab/puffin>
 - Method: Dudnyk, K., Cai, D., Shi, C., Xu, J. and Zhou, J. *Sequence basis of
